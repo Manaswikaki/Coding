@@ -11,4 +11,4 @@ def remove_from_set(s, element):
 def sum_set(s):
 
      #your code here
-    return sum(s)
+     return sum(s)
