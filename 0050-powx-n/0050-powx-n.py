@@ -1,0 +1,18 @@
+class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        # Handle negative exponent
+        if n < 0:
+            x = 1.0 / x
+            n = -n
+
+        result = 1.0
+        base = x
+        exp = n
+
+        while exp > 0:
+            if exp & 1:
+                result *= base
+            base *= base
+            exp >>= 1
+
+        return result
