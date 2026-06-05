@@ -2,9 +2,7 @@ class Solution:
     def fib(self, n: int) -> int:
         x=0
         b=1
-        l=[]
         for i in range(n):
-            l.append(x)
             x,b=b,x+b
         return x
 
