@@ -1,4 +1,4 @@
-# [Largest in Array](https://www.geeksforgeeks.org/problems/largest-element-in-array4009/1?page=1&category=Arrays&sortBy=submissions)
+# [Largest in Array](https://www.geeksforgeeks.org/problems/largest-element-in-array4009/1)
 ## Easy
 Given an array arr[]. The task is to find the largest element and return it.
 Examples:
