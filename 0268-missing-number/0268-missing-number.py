@@ -1,10 +1,10 @@
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
-        res=0
-        n=max(nums)
-        for i in range(0,n+2):
-            if i in nums:
-                pass
-            else:
+        a=[]
+        for i in range(len(nums)+1):
+            if i not in nums:
                 return i
-                break    
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
