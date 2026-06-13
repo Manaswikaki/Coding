@@ -1,8 +1,10 @@
 from collections import Counter
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
-        count=Counter(nums)
-        a=set(nums)
-        for i in a:
-            if count[i]==1:
-                return i
+        counts=Counter(nums)
+        l=min(counts, key=counts.get)
+        return l
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
