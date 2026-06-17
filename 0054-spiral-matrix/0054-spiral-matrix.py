@@ -1,0 +1,39 @@
+class Solution:
+    def spiralOrder(self, matrix: list[list[int]]) -> list[int]:
+        if not matrix:
+            return []
+
+        res = []
+        top, bottom = 0, len(matrix) - 1
+        left, right = 0, len(matrix[0]) - 1
+
+        while top <= bottom and left <= right:
+            # 1. Traverse Right
+            for i in range(left, right + 1):
+                res.append(matrix[top][i])
+            top += 1
+
+            # 2. Traverse Down
+            for i in range(top, bottom + 1):
+                res.append(matrix[i][right])
+            right -= 1
+
+            if not (top <= bottom and left <= right):
+                break
+
+            # 3. Traverse Left
+            for i in range(right, left - 1, -1):
+                res.append(matrix[bottom][i])
+            bottom -= 1
+
+            # 4. Traverse Up
+            for i in range(bottom, top - 1, -1):
+                res.append(matrix[i][left])
+            left += 1
+
+        return res
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
