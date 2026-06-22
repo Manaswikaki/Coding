@@ -1,17 +1,24 @@
-from typing import List
-
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
         if not strs:
             return ""
         
+        # Start by assuming the first word is the prefix
         prefix = strs[0]
-        for s in strs[1:]:
-            i = 0
-            max_i = min(len(prefix), len(s))
-            while i < max_i and prefix[i] == s[i]:
-                i += 1
-            prefix = prefix[:i]
-            if not prefix:
-                return ""
+        
+        for i in range(1, len(strs)):
+            # While the current word doesn't start with the prefix
+            while not strs[i].startswith(prefix):
+                # Shorten the prefix by one character from the end
+                prefix = prefix[:-1]
+                
+                # If prefix becomes empty, there's no common prefix
+                if not prefix:
+                    return ""
+        
         return prefix
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
