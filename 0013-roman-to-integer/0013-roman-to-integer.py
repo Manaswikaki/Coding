@@ -1,15 +1,31 @@
 class Solution:
     def romanToInt(self, s: str) -> int:
-        d = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
-        summ = 0
+        # Map of Roman symbols to their integer values
+        roman_map = {
+            'I': 1,
+            'V': 5,
+            'X': 10,
+            'L': 50,
+            'C': 100,
+            'D': 500,
+            'M': 1000
+        }
+        
+        total = 0
         n = len(s)
-        i = 0
-        while i < n:
-            # Check if the current value is less than the next one
-            if i + 1 < n and d[s[i]] < d[s[i+1]]:
-                summ += d[s[i+1]] - d[s[i]] # Add the difference
-                i += 2 # Skip the next character as it's already handled
+        
+        for i in range(n):
+            # Check if the current value is less than the next value
+            if i < n - 1 and roman_map[s[i]] < roman_map[s[i+1]]:
+                # Subtraction case (e.g., IV, IX, XL)
+                total -= roman_map[s[i]]
             else:
-                summ += d[s[i]] # Add the current character's value
-                i += 1
-        return summ
+                # Standard addition case
+                total += roman_map[s[i]]
+        
+        return total
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
