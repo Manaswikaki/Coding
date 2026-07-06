@@ -1,33 +1,35 @@
 class Solution:
     def divide(self, dividend: int, divisor: int) -> int:
-        # Handle the edge case for overflow: -2^31 / -1 results in 2^31, which is out of range.
-        if dividend == -2147483648 and divisor == -1:
-            return 2147483647 #
+        # Constants for 32-bit integer limits
+        MAX_INT = 2**31 - 1
+        MIN_INT = -2**31
+
+        # Handle overflow case
+        if dividend == MIN_INT and divisor == -1:
+            return MAX_INT
 
         # Determine the sign of the result
         negative = (dividend < 0) != (divisor < 0)
 
-        # Take absolute values of dividend and divisor using negation to avoid issues with abs(-2^31) in Python
-        # which can overflow to a positive number larger than the max positive int
-        a = -abs(dividend)
-        b = -abs(divisor)
-
+        # Work with absolute values to simplify logic
+        dividend, divisor = abs(dividend), abs(divisor)
         quotient = 0
-        # Perform division using bit manipulation (repeated subtraction with doubling)
-        while a <= b:
-            temp = b
-            count = 1
-            # Double 'temp' (divisor) as long as it fits into the remaining 'a' (dividend)
-            while temp >= (-(2**30)) and a <= (temp << 1):
-                temp <<= 1
+
+        # Bit manipulation approach (Binary Long Division)
+        while dividend >= divisor:
+            temp_divisor, count = divisor, 1
+            # Shift divisor left (multiply by 2) until it's larger than dividend
+            while dividend >= (temp_divisor << 1):
+                temp_divisor <<= 1
                 count <<= 1
             
-            a -= temp # Subtract the largest possible multiple
-            quotient += count # Add the corresponding count to the quotient
+            # Subtract the largest found multiple and add count to quotient
+            dividend -= temp_divisor
+            quotient += count
 
-        # Apply the correct sign and ensure it stays within the 32-bit integer range
-        if not negative:
-            # Check for overflow if the result should be positive
-            return min(quotient, 2147483647) 
-        else:
-            return -quotient
+        return -quotient if negative else quotient
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
