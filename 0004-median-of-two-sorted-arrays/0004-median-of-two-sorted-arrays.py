@@ -1,33 +1,40 @@
-from typing import List
-import math
-
 class Solution:
-    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
-        # Ensure nums1 is the smaller array
+    def findMedianSortedArrays(self, nums1: list[int], nums2: list[int]) -> float:
+        # Ensure nums1 is the shorter array to minimize binary search range
         if len(nums1) > len(nums2):
             nums1, nums2 = nums2, nums1
-
+            
         m, n = len(nums1), len(nums2)
-        total = m + n
-        half = total // 2
-
         low, high = 0, m
-
-        while True:
+        total_left = (m + n + 1) // 2
+        
+        while low <= high:
             i = (low + high) // 2
-            j = half - i
-
-            L1 = nums1[i - 1] if i > 0 else float('-inf')
-            L2 = nums2[j - 1] if j > 0 else float('-inf')
-            R1 = nums1[i] if i < m else float('inf')
-            R2 = nums2[j] if j < n else float('inf')
-
-            if L1 <= R2 and L2 <= R1:
-                if total % 2 == 1:
-                    return min(R1, R2)
+            j = total_left - i
+            
+            # Boundary values for partition comparison
+            nums1_left_max = float('-inf') if i == 0 else nums1[i - 1]
+            nums1_right_min = float('inf') if i == m else nums1[i]
+            
+            nums2_left_max = float('-inf') if j == 0 else nums2[j - 1]
+            nums2_right_min = float('inf') if j == n else nums2[j]
+            
+            # Check if correct partition is found
+            if nums1_left_max <= nums2_right_min and nums2_left_max <= nums1_right_min:
+                # Odd total number of elements
+                if (m + n) % 2 == 1:
+                    return float(max(nums1_left_max, nums2_left_max))
+                # Even total number of elements
                 else:
-                    return (max(L1, L2) + min(R1, R2)) / 2.0
-            elif L1 > R2:
+                    return (max(nums1_left_max, nums2_left_max) + min(nums1_right_min, nums2_right_min)) / 2.0
+            
+            # Adjust binary search window
+            elif nums1_left_max > nums2_right_min:
                 high = i - 1
-            else:  # L2 > R1
+            else:
                 low = i + 1
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
