@@ -1,18 +1,7 @@
 class Solution:
     def myPow(self, x: float, n: int) -> float:
-        # Handle negative exponent
-        if n < 0:
-            x = 1.0 / x
-            n = -n
+        return pow(x,n)
 
-        result = 1.0
-        base = x
-        exp = n
-
-        while exp > 0:
-            if exp & 1:
-                result *= base
-            base *= base
-            exp >>= 1
-
-        return result
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
