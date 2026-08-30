@@ -1,30 +1,29 @@
-from typing import List
-
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        results: List[List[int]] = []
-        candidates.sort()  # Optional: helps pruning and ensures non-decreasing order in combos
-
-        def dfs(start: int, remaining: int, path: List[int]):
-            # If remaining is exactly 0, we found a valid combination
-            if remaining == 0:
-                results.append(path.copy())
+        result = []
+        
+        def backtrack(index: int, current_combination: List[int], current_sum: int):
+            # Base Case: Found a combination that matches the target
+            if current_sum == target:
+                result.append(list(current_combination))
                 return
-            # If remaining becomes negative, this path cannot be a solution
-            if remaining < 0:
+            
+            # Base Case: Exceeded target or ran out of candidates
+            if current_sum > target or index >= len(candidates):
                 return
+            
+            # Choice 1: Include the current candidate (we don't increment index to allow reuse)
+            current_combination.append(candidates[index])
+            backtrack(index, current_combination, current_sum + candidates[index])
+            current_combination.pop() # Backtrack
+            
+            # Choice 2: Skip the current candidate and move to the next one
+            backtrack(index + 1, current_combination, current_sum)
+            
+        backtrack(0, [], 0)
+        return result
 
-            # Explore candidates starting from 'start' to allow unlimited use of the same candidate
-            for i in range(start, len(candidates)):
-                cur = candidates[i]
-                # Pruning: since candidates are sorted, if cur > remaining, no need to continue
-                if cur > remaining:
-                    break
 
-                # Include cur and continue exploring with the same i (since we can reuse)
-                path.append(cur)
-                dfs(i, remaining - cur, path)
-                path.pop()  # backtrack
-
-        dfs(0, target, [])
-        return results
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
