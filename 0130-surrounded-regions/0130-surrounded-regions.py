@@ -1,0 +1,50 @@
+class Solution:
+    def solve(self, board: list[list[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        if not board or not board[0]:
+            return
+        
+        ROWS, COLS = len(board), len(board[0])
+        
+        def dfs(r, c):
+            # Base cases: out of bounds or not an 'O'
+            if r < 0 or r >= ROWS or c < 0 or c >= COLS or board[r][c] != 'O':
+                return
+            
+            # Mark the safe 'O' with a temporary character '#'
+            board[r][c] = '#'
+            
+            # Explore all 4 adjacent directions
+            dfs(r + 1, c)
+            dfs(r - 1, c)
+            dfs(r, c + 1)
+            dfs(r, c - 1)
+            
+        # Step 1: Run DFS for all 'O's on the boundary rows (first and last row)
+        for c in range(COLS):
+            if board[0][c] == 'O':
+                dfs(0, c)
+            if board[ROWS - 1][c] == 'O':
+                dfs(ROWS - 1, c)
+                
+        # Step 1: Run DFS for all 'O's on the boundary columns (first and last column)
+        for r in range(ROWS):
+            if board[r][0] == 'O':
+                dfs(r, 0)
+            if board[r][COLS - 1] == 'O':
+                dfs(r, COLS - 1)
+                
+        # Steps 2 & 3: Traverse the whole board to flip remaining 'O's to 'X' and restore '#' to 'O'
+        for r in range(ROWS):
+            for c in range(COLS):
+                if board[r][c] == 'O':
+                    board[r][c] = 'X'
+                elif board[r][c] == '#':
+                    board[r][c] = 'O'
+
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
